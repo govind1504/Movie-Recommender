@@ -35,8 +35,14 @@ if st.button('Recommend'):
 
         response = requests.get(url, headers=headers)
         image = response.json()
-        file_path = image['backdrops'][0]['file_path']
+        try:
+            file_path = image['backdrops'][0]['file_path']
+        except :
+            file_path = ""
         with col:
             st.write(rec)
-            st.image(f"http://image.tmdb.org/t/p/w500{file_path}")
-
+            if file_path == '':
+                st.error('NO IMG')
+            else:
+                st.image(f"http://image.tmdb.org/t/p/w500{file_path}")
+            st.write(id)
